@@ -2,7 +2,7 @@ import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { Observable } from 'rxjs';
 import { GetMoviesQueryDto } from '../../commons/dto/get-movies-query.dto';
-import { GetMoviesResponse, Movie } from './dto/get-movies-response.dto';
+import { GetMoviesResponseDto, Movie } from './dto/get-movies-response.dto';
 import { MovieService } from './movie.service';
 
 @Controller('/movie')
@@ -16,18 +16,18 @@ export class MovieController {
   })
   getNowPlayingMovies(
     @Query() params: GetMoviesQueryDto,
-  ): Observable<GetMoviesResponse> {
+  ): Observable<GetMoviesResponseDto> {
     return this.movieService.getNowPlayingMovies(params);
   }
 
   @Get('/popular')
   @ApiOkResponse({
     description: 'Popular movies returned successfully',
-    type: GetMoviesResponse,
+    type: GetMoviesResponseDto,
   })
   getPopularMovies(
     @Query() params: GetMoviesQueryDto,
-  ): Observable<GetMoviesResponse> {
+  ): Observable<GetMoviesResponseDto> {
     return this.movieService.getPopularMovies(params);
   }
 }

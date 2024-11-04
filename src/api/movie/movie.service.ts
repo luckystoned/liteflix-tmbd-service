@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { GetMoviesQueryDto } from '../../commons/dto/get-movies-query.dto';
 import { TmdbService } from '../../services/tmdb/tmdb.service';
-import { GetMoviesResponse } from './dto/get-movies-response.dto';
+import { GetMoviesResponseDto } from './dto/get-movies-response.dto';
 import { MovieHelper } from './helpers/movie.helper';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class MovieService {
 
   getNowPlayingMovies(
     params?: GetMoviesQueryDto,
-  ): Observable<GetMoviesResponse> {
+  ): Observable<GetMoviesResponseDto> {
     return this.tmdbService.getNowPlayingMoviess(params).pipe(
       map(MovieHelper.normalizeMoviesFromResponse),
       tap(() =>
@@ -32,7 +32,9 @@ export class MovieService {
     );
   }
 
-  getPopularMovies(params?: GetMoviesQueryDto): Observable<GetMoviesResponse> {
+  getPopularMovies(
+    params?: GetMoviesQueryDto,
+  ): Observable<GetMoviesResponseDto> {
     return this.tmdbService.getPopularMovies(params).pipe(
       map(MovieHelper.normalizeMoviesFromResponse),
       tap(() =>

@@ -93,7 +93,7 @@ export class Dates {
   readonly minimum?: string;
 }
 
-export class GetMoviesResponse {
+export class GetMoviesResponseDto {
   @ApiPropertyOptional()
   @IsInt()
   @IsOptional()
