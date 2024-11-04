@@ -1,8 +1,24 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
-async function bootstrap() {
+const { PORT } = process.env;
+
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+
+  app.enableCors();
+
+  const options = new DocumentBuilder()
+    .setTitle('Liteflix TMDb Service')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('docs', app, document);
+
+  app.useGlobalPipes(new ValidationPipe());
+
+  await app.listen(PORT || 3000);
 }
+
 bootstrap();
